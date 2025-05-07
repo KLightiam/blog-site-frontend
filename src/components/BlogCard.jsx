@@ -1,0 +1,24 @@
+import { Link } from 'react-router-dom';
+
+function BlogCard({ post }) {
+  return (
+    <article className="bg-white rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl">
+      <Link to={`/blog/${post.id}`}>
+        <div className="h-48 overflow-hidden">
+          <img 
+            src={post.image}
+            alt={post.title}
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          />
+        </div>
+        
+        <div className="p-6">
+          <p className="text-gray-500 text-sm mb-2">{post.date}</p>
+          <h3 className="text-xl font-bold mb-3 leading-tight">{post.title}</h3>
+          <p className="text-gray-600">{post.description}</p>
+        </div>
+      </Link>
+    </article>
+  );
+}
+export default BlogCard;
