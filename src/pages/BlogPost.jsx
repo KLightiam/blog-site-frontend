@@ -1,10 +1,28 @@
 
 import { useParams, Link } from 'react-router-dom';
 import { blogPosts } from '../data/blogPosts';
+import { useEffect, useState } from 'react';
 
 function BlogPost() {
   const { id } = useParams();
-  const post = blogPosts.find(post => post.id === parseInt(id));
+  const [post, setPost] = useState(null);
+  useEffect(() => {
+    async function fetchPost() {
+      try {
+        const response = await fetch(`http://localhost:3000/api/v1/posts/${id}`);
+        if (!response.ok) {
+          console.error('Network response was not ok');
+          return;
+        }
+        const data = await response.json();
+        // console.log('Fetched blog post:', data);
+        setPost(data);
+      } catch (error) {
+        console.error('Error fetching blog post:', error);
+      }
+    }
+    fetchPost();
+  }, [id]);
   
   if (!post) {
     return (
@@ -21,13 +39,13 @@ function BlogPost() {
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
         <p className="text-gray-500">
-          <span>{post.date}</span>
+          <span>{new Date(post.date).toLocaleDateString()}</span>
         </p>
       </div>
       
       <div className="mb-8">
         <img 
-          src={post.image} 
+          src={post.files[0].url} 
           alt={post.title} 
           className="w-full h-auto rounded-lg shadow-md"
         />
@@ -35,19 +53,8 @@ function BlogPost() {
       
       <div className="prose prose-lg max-w-none">
         <p>
-          {post.fullContent || "This is a placeholder for the full blog post content. In a real application, this would contain the complete article with formatted text, images, and other media."}
-        </p>
-        
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, urna eu tincidunt consectetur, nisl nunc euismod nisi, eu porttitor nisl nisi euismod nisi.</p>
-        
-        <h2>Section Heading</h2>
-        <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-        
-        <blockquote className="border-l-4 border-gray-300 pl-4 italic">
-          This is an example blockquote that could be used to highlight important information or quotes within the blog post.
-        </blockquote>
-        
-        <p>Donec sed odio dui. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec ullamcorper nulla non metus auctor fringilla.</p>
+          {post.content || "No content available for this post."}
+        </p>       
       </div>
       
       <div className="mt-12">
