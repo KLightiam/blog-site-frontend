@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react';
 function BlogPost() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchPost() {
+
       try {
         const response = await fetch(`http://localhost:3000/api/v1/posts/${id}`);
         if (!response.ok) {
@@ -15,14 +17,16 @@ function BlogPost() {
           return;
         }
         const data = await response.json();
-        // console.log('Fetched blog post:', data);
         setPost(data);
+        // setLoading(false);
       } catch (error) {
         console.error('Error fetching blog post:', error);
+      }finally {
+        setLoading(false);
       }
     }
     fetchPost();
-  }, [id]);
+  }, []);
   
   if (!post) {
     return (
@@ -35,6 +39,13 @@ function BlogPost() {
   }
   
   return (
+  <>
+    {loading ? (
+      <div className="text-center py-16">
+        <h2 className="text-3xl font-bold mb-4">Loading...</h2>
+        <p className="text-gray-600 mb-8">Please wait while we fetch the blog post.</p>
+      </div>
+    ) : (
     <article className="max-w-3xl mx-auto">
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
@@ -66,6 +77,8 @@ function BlogPost() {
         </Link>
       </div>
     </article>
+  )}
+  </>
   );
 }
 

@@ -1,23 +1,39 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, Tag, BookOpen } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function CategoriesPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [categories, setCategories] = useState([]);
+  const [filteredCategories, setFilteredCategories] = useState([]);
   
-  // Sample categories data
-  const categories = [
-    { id: 1, name: 'Technology', count: 24, description: 'Latest tech trends, reviews, and digital innovations' },
-    { id: 2, name: 'Travel', count: 18, description: 'Destinations, travel tips, and adventure stories' },
-    { id: 3, name: 'Food', count: 15, description: 'Recipes, restaurant reviews, and culinary experiences' },
-    { id: 4, name: 'Lifestyle', count: 12, description: 'Wellness, mindfulness, and everyday living' },
-    { id: 5, name: 'Photography', count: 9, description: 'Photo techniques, equipment reviews, and visual stories' },
-    { id: 6, name: 'Books', count: 7, description: 'Book reviews, reading lists, and literary discussions' }
-  ];
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await fetch('http://localhost:3000/api/v1/categories');
+        if (response.ok) {
+        const data = await response.json();
+        console.log('Fetched categories:', data);
+        setCategories(data);
+        }
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    }
+    fetchCategories();
+  }, []);
   
-  const filteredCategories = categories.filter(category => 
-    category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    category.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    setFilteredCategories(prev => {
+      if (!searchTerm) {
+        return categories;
+      }
+      return categories.filter(category =>
+        category.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    );
+  }, [searchTerm, categories]);
   
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -40,7 +56,7 @@ export default function CategoriesPage() {
             <input
               type="text"
               placeholder="Search categories..."
-              className="block w-full py-3 px-2 focus:outline-none"
+              className="block w-full py-3 px-2 focus:outline-none text-gray-900 placeholder-gray-400"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -58,17 +74,17 @@ export default function CategoriesPage() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
                     <Tag className="h-5 w-5 text-indigo-600 mr-2" />
-                    <h3 className="text-lg font-medium text-gray-900">{category.name}</h3>
+                    <h3 className="text-lg font-medium text-gray-900">{category.name.toUpperCase()}</h3>
                   </div>
                   <span className="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-                    {category.count} {category.count === 1 ? 'post' : 'posts'}
+                    {category.posts.length} {category.posts.length === 1 ? 'post' : 'posts'}
                   </span>
                 </div>
-                <p className="text-gray-600 text-sm mb-4">{category.description}</p>
-                <button className="flex items-center text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                {/* <p className="text-gray-600 text-sm mb-4">{category.description}</p> */}
+                <Link to={`/${category.name}/articles`} className="flex items-center text-indigo-600 hover:text-indigo-800 text-sm font-medium">
                   <BookOpen className="h-4 w-4 mr-1" />
                   Browse articles
-                </button>
+                </Link>
               </div>
             </div>
           ))}

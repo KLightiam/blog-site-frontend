@@ -9,6 +9,7 @@ import BlogPost from './pages/BlogPost.jsx'
 import About from './pages/About.jsx'
 import ContactPage from './pages/Contact.jsx'
 import Categories from './pages/Categories.jsx'
+import CategoryArticles from './pages/CategoryArticles.jsx'
 
 const router = createBrowserRouter([
   { 
@@ -20,7 +21,9 @@ const router = createBrowserRouter([
       {path: '/blog/:id', element: <BlogPost />},
       {path: '/about', element: <About />},
       {path: '/contact', element: <ContactPage />},
-      {path: '/categories', element: <Categories />},
+      {path: '/categories', element: <Categories />, children: [
+        { path: ':categoryName/articles', element: <CategoryArticles /> }
+      ]},
     ],
   },
 ])
