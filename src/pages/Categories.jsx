@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Search, Tag, BookOpen } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 export default function CategoriesPage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -13,7 +13,7 @@ export default function CategoriesPage() {
         const response = await fetch('http://localhost:3000/api/v1/categories');
         if (response.ok) {
         const data = await response.json();
-        console.log('Fetched categories:', data);
+        // console.log('Fetched categories:', data);
         setCategories(data);
         }
       } catch (error) {
@@ -71,17 +71,19 @@ export default function CategoriesPage() {
               className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 transition-all hover:shadow-lg"
             >
               <div className="p-6">
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center">
                     <Tag className="h-5 w-5 text-indigo-600 mr-2" />
                     <h3 className="text-lg font-medium text-gray-900">{category.name.toUpperCase()}</h3>
                   </div>
-                  <span className="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                  <div className=" bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded-full ">
+                  <span className='md:text-nowrap'>
                     {category.posts.length} {category.posts.length === 1 ? 'post' : 'posts'}
                   </span>
+                  </div>
                 </div>
                 {/* <p className="text-gray-600 text-sm mb-4">{category.description}</p> */}
-                <Link to={`/${category.name}/articles`} className="flex items-center text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                <Link to={`/categories/${category.name}/posts`} className="flex items-center text-indigo-600 hover:text-indigo-800 text-sm font-medium">
                   <BookOpen className="h-4 w-4 mr-1" />
                   Browse articles
                 </Link>
@@ -96,6 +98,7 @@ export default function CategoriesPage() {
           </div>
         )}
       </main>
+      {/* <Outlet /> */}
     </div>
   );
 }
