@@ -38,10 +38,10 @@ export default function CategoriesPage() {
   return (
     <div className=" min-h-screen">
       {/* Header */}
-      <header className="shadow-sm shadow-indigo-900">
+      <header className="shadow-sm dark:shadow-indigo-900">
         <div className="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-100">Categories</h1>
-          <p className="mt-2 text-gray-300">Explore topics that interest you</p>
+          <h1 className="text-3xl font-bold dark:text-gray-100">Categories</h1>
+          <p className="mt-2 dark:text-gray-300">Explore topics that interest you</p>
         </div>
       </header>
       
@@ -49,14 +49,14 @@ export default function CategoriesPage() {
       <main className="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {/* Search Bar */}
         <div className="mb-8 relative">
-          <div className="flex items-center border border-gray-500 rounded-lg shadow-sm shadow-gray-500">
+          <div className="flex items-center border border-gray-500 rounded-lg shadow-sm dark:shadow-gray-500">
             <div className="pl-4 pr-2">
               <Search className="h-5 w-5 text-gray-400" />
             </div>
             <input
               type="text"
               placeholder="Search categories..."
-              className="block w-full py-3 px-2 focus:outline-none text-gray-100 placeholder-gray-200"
+              className="block w-full py-3 px-2 focus:outline-none dark:text-gray-100 dark:placeholder-gray-200"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -68,13 +68,13 @@ export default function CategoriesPage() {
           {filteredCategories.map((category) => (
             <div 
               key={category.id} 
-              className=" rounded-lg shadow-md shadow-gray-500 overflow-hidden border border-gray-500 transition-all hover:shadow-lg hover:text-indigo-800"
+              className=" rounded-lg shadow-md shadow-gray-500 overflow-hidden border border-gray-500 transition-all hover:shadow-lg dark:hover:text-indigo-800"
             >
               <div className="p-6">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center">
                     <Tag className="h-5 w-5 text-indigo-600 mr-2" />
-                    <h3 className="text-lg font-medium text-indigo-100">{category.name.toUpperCase()}</h3>
+                    <h3 className="text-lg font-medium dark:text-indigo-100">{category.name.toUpperCase()}</h3>
                   </div>
                   <div className=" bg-indigo-100 text-indigo-900 text-xs font-medium px-2.5 py-0.5 rounded-full ">
                   <span className='md:text-nowrap'>

@@ -43,8 +43,8 @@ export default function CategoryPosts(){
         ))}
       </div>
       <button
-        onClick={() => navigate(-1)}
-        className="mt-8 bg-black transition text-white px-6 py-3 rounded-lg hover:bg-gray-800 duration-300 ease-in-out hover:scale-105"
+        onClick={() => navigate("/categories")}
+        className="mt-8 text-white hover:bg-indigo-700 bg-indigo-600 dark:bg-black transition dark:text-white px-6 py-3 rounded-lg dark:hover:bg-gray-800 duration-300 ease-in-out"
       >
         Back to Categories
       </button>

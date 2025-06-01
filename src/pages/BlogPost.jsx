@@ -79,7 +79,7 @@ function BlogPost() {
         </Link> */}
         <button 
           onClick={() => navigation(-1)} 
-          className="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors">Go Back</button>
+          className="inline-block dark:bg-black bg-indigo-700 text-white px-6 py-3 rounded-lg dark:hover:bg-gray-800 hover:bg-indigo-800 transition-colors">Go Back</button>
       </div>
     </article>
   )}

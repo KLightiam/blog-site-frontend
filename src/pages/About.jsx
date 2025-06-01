@@ -24,8 +24,8 @@ export default function AboutPage() {
                   className="rounded-full mx-auto border-4 border-white shadow-lg w-32 h-32 object-cover" 
                 />
               </div>
-              <h2 className="text-xl font-bold text-white mb-2">Alex Morgan</h2>
-              <p className="text-indigo-200 mb-6">Blogger & Content Creator</p>
+              <h2 className="text-xl font-bold text-white mb-2">Kabah Atawoge</h2>
+              <p className="text-indigo-200 mb-6">Blogger & Journalist</p>
               
               <div className="flex justify-center space-x-4">
                 <a href="#" className="text-white hover:text-indigo-200">
@@ -45,7 +45,7 @@ export default function AboutPage() {
             
             <div className="md:w-2/3 p-8">
               <div className="prose max-w-none">
-                <h3 className="text-2xl font-medium text-gray-900 mb-4">Hey there, I'm Alex!</h3>
+                <h3 className="text-2xl font-medium text-gray-900 mb-4">Hey there, I'm Kabah!</h3>
                 
                 <p className="text-gray-600 mb-4">
                   Welcome to my blog! I'm a passionate writer and digital storyteller with over 5 years of experience creating content across various niches. My journey began in 2020 when I decided to share my thoughts on technology, travel, and lifestyle with the world.

@@ -14,9 +14,9 @@ function BlogCard({ post,category }) {
         </div>
         
         <div className="p-6">
-          <p className="text-gray-100 text-sm mb-2">{new Date(post.date).toLocaleDateString()}</p>
+          <p className="dark:text-gray-100 text-sm mb-2">{new Date(post.date).toLocaleDateString()}</p>
           <h3 className="text-xl font-bold mb-3 leading-tight">{post.title}</h3>
-          <p className="text-gray-300">{post.content.split(" ").slice(0,10).join(' ')+"..."}</p>
+          <p className="dark:text-gray-300">{post.content.split(" ").slice(0,10).join(' ')+"..."}</p>
         </div>
       </Link>
     </article>
