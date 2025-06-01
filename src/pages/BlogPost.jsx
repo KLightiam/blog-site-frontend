@@ -2,11 +2,13 @@
 import { useParams, Link } from 'react-router-dom';
 import { blogPosts } from '../data/blogPosts';
 import { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 function BlogPost() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigate();
+
   useEffect(() => {
     async function fetchPost() {
 
@@ -69,12 +71,15 @@ function BlogPost() {
       </div>
       
       <div className="mt-12">
-        <Link 
+        {/* <Link 
           to="/" 
           className="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors"
         >
           Back to All Posts
-        </Link>
+        </Link> */}
+        <button 
+          onClick={() => navigation(-1)} 
+          className="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors">Go Back</button>
       </div>
     </article>
   )}
