@@ -2,21 +2,21 @@ import { Mail, Instagram, Twitter, Github } from 'lucide-react';
 
 export default function AboutPage() {
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="shadow-sm">
         <div className="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">About Me</h1>
-          <p className="mt-2 text-gray-600">Learn more about who I am and what I do</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">About Me</h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-300">Learn more about who I am and what I do</p>
         </div>
       </header>
       
       {/* Main Content */}
       <main className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="shadow-md rounded-lg overflow-hidden">
           {/* Profile Section */}
           <div className="md:flex">
-            <div className="md:w-1/3 bg-indigo-700 p-8 text-center">
+            <div className="md:w-1/3 light:bg-indigo-700 p-8 text-center">
               <div className="mb-4">
                 <img 
                   src="/api/placeholder/200/200" 
@@ -44,46 +44,46 @@ export default function AboutPage() {
             </div>
             
             <div className="md:w-2/3 p-8">
-              <div className="prose max-w-none">
-                <h3 className="text-2xl font-medium text-gray-900 mb-4">Hey there, I'm Kabah!</h3>
+              <div className="max-w-none">
+                <h3 className="text-2xl font-medium dark:text-white text-gray-900 mb-4">Hey there, I'm Kabah!</h3>
                 
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 dark:text-white mb-4">
                   Welcome to my blog! I'm a passionate writer and digital storyteller with over 5 years of experience creating content across various niches. My journey began in 2020 when I decided to share my thoughts on technology, travel, and lifestyle with the world.
                 </p>
                 
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 dark:text-white mb-6">
                   What started as a simple hobby has evolved into a platform where I connect with readers from around the globe. My mission is to create valuable, insightful, and entertaining content that inspires and helps others.
                 </p>
                 
-                <h4 className="text-xl font-medium text-gray-900 mb-3">What I Write About</h4>
+                <h4 className="text-xl font-medium dark:text-white text-gray-900 mb-3">What I Write About</h4>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h5 className="font-medium text-indigo-700 mb-1">Technology</h5>
-                    <p className="text-sm text-gray-600">Latest trends, gadget reviews, and digital solutions</p>
+                  <div className="bg-gray-50 p-4 rounded-lg dark:bg-gray-800">
+                    <h5 className="font-medium text-indigo-700 mb-1 dark:text-white">Technology</h5>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Latest trends, gadget reviews, and digital solutions</p>
                   </div>
                   
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h5 className="font-medium text-indigo-700 mb-1">Travel</h5>
-                    <p className="text-sm text-gray-600">Destinations, adventure stories, and travel tips</p>
+                  <div className="bg-gray-50 p-4 rounded-lg dark:bg-gray-800">
+                    <h5 className="font-medium text-indigo-700 mb-1 dark:text-white">Travel</h5>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Destinations, adventure stories, and travel tips</p>
                   </div>
                   
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h5 className="font-medium text-indigo-700 mb-1">Lifestyle</h5>
-                    <p className="text-sm text-gray-600">Wellness, productivity, and personal growth</p>
+                  <div className="bg-gray-50 p-4 rounded-lg dark:bg-gray-800">
+                    <h5 className="font-medium text-indigo-700 mb-1 dark:text-white">Lifestyle</h5>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Wellness, productivity, and personal growth</p>
                   </div>
                   
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h5 className="font-medium text-indigo-700 mb-1">Photography</h5>
-                    <p className="text-sm text-gray-600">Tips, techniques, and visual storytelling</p>
+                  <div className="bg-gray-50 p-4 rounded-lg dark:bg-gray-800">
+                    <h5 className="font-medium text-indigo-700 mb-1 dark:text-white">Photography</h5>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">Tips, techniques, and visual storytelling</p>
                   </div>
                 </div>
                 
                 <h4 className="text-xl font-medium text-gray-900 mb-3">My Story</h4>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 mb-4 dark:text-white">
                   Before becoming a full-time blogger, I worked in marketing for several tech companies. My background in digital marketing has helped me understand how to create content that resonates with readers and builds a loyal community.
                 </p>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-white">
                   When I'm not writing, you can find me hiking local trails, experimenting with new recipes in the kitchen, or curled up with a good book. I believe in continuous learning and am always exploring new topics to share with my audience.
                 </p>
               </div>
@@ -91,10 +91,10 @@ export default function AboutPage() {
           </div>
           
           {/* Newsletter Section */}
-          <div className="bg-gray-50 p-8 border-t border-gray-200">
+          <div className=" p-8 border-t border-gray-700">
             <div className="text-center">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Join My Newsletter</h3>
-              <p className="text-gray-600 mb-4 max-w-lg mx-auto">Stay updated with my latest posts and receive exclusive content straight to your inbox.</p>
+              <h3 className="text-lg font-medium text-gray-50 mb-2">Join My Newsletter</h3>
+              <p className="text-gray-100 mb-4 max-w-lg mx-auto">Stay updated with my latest posts and receive exclusive content straight to your inbox.</p>
               
               <div className="flex max-w-md mx-auto">
                 <input 

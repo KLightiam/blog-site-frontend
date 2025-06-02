@@ -42,21 +42,21 @@ export default function ContactPage() {
   };
   
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="light:bg-gray-50 min-h-screen">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="light:bg-white shadow-sm">
         <div className="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">Contact Me</h1>
-          <p className="mt-2 text-gray-600">Get in touch with questions, suggestions, or collaboration ideas</p>
+          <h1 className="text-3xl font-bold light:text-gray-900">Contact Me</h1>
+          <p className="mt-2 light:text-gray-600">Get in touch with questions, suggestions, or collaboration ideas</p>
         </div>
       </header>
       
       {/* Main Content */}
       <main className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="light:bg-white shadow-md rounded-lg overflow-hidden">
           <div className="md:flex">
             {/* Contact Info Section */}
-            <div className="md:w-1/3 bg-indigo-700 p-8 text-white">
+            <div className="md:w-1/3 light:bg-indigo-700 p-8 text-white">
               <h2 className="text-2xl font-bold mb-6">Let's Connect</h2>
               
               <div className="space-y-6">
@@ -110,8 +110,8 @@ export default function ContactPage() {
             {/* Contact Form Section */}
             <div className="md:w-2/3 p-8">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Send Me a Message</h2>
-                <p className="text-gray-600">Have a question or want to collaborate? Fill out the form below and I'll get back to you as soon as possible.</p>
+                <h2 className="text-2xl font-bold light:text-gray-900 mb-2">Send Me a Message</h2>
+                <p className="text-gray-600 dark:text-gray-300">Have a question or want to collaborate? Fill out the form below and I'll get back to you as soon as possible.</p>
               </div>
               
               {formStatus.submitted ? (
@@ -130,7 +130,7 @@ export default function ContactPage() {
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="name" className="block text-sm font-medium light:text-gray-700 mb-1">
                         Your Name
                       </label>
                       <input
@@ -139,12 +139,12 @@ export default function ContactPage() {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full text-gray-700 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full light:text-gray-700 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
                     
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="email" className="block text-sm font-medium light:text-gray-700 mb-1">
                         Your Email
                       </label>
                       <input
@@ -153,13 +153,13 @@ export default function ContactPage() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full px-4 text-gray-700 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-4 light:text-gray-700 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
                   </div>
                   
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="subject" className="block text-sm font-medium light:text-gray-700 mb-1">
                       Subject
                     </label>
                     <input
@@ -168,12 +168,12 @@ export default function ContactPage() {
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
-                      className="w-full text-gray-700 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full light:text-gray-700 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    <label htmlFor="message" className="block text-sm font-medium light:text-gray-700 mb-1">
                       Message
                     </label>
                     <textarea
@@ -182,7 +182,7 @@ export default function ContactPage() {
                       rows="5"
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-4 py-2 light:text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     ></textarea>
                   </div>
                   
@@ -203,27 +203,27 @@ export default function ContactPage() {
         
         {/* FAQ Section */}
         <div className="mt-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+          <h2 className="text-2xl font-bold light:text-gray-900 mb-6">Frequently Asked Questions</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="font-medium text-lg text-gray-900 mb-2">How quickly do you respond to messages?</h3>
-              <p className="text-gray-600">I typically respond to all inquiries within 24-48 hours during weekdays.</p>
+            <div className="light:bg-white p-6 rounded-lg shadow-md">
+              <h3 className="font-medium text-lg light:text-gray-900 mb-2">How quickly do you respond to messages?</h3>
+              <p className="text-gray-600 dark:text-gray-300">I typically respond to all inquiries within 24-48 hours during weekdays.</p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="font-medium text-lg text-gray-900 mb-2">Do you accept guest posts?</h3>
-              <p className="text-gray-600">Yes, I'm open to high-quality guest contributions that align with my blog's themes and provide value to readers.</p>
+            <div className="light:bg-white p-6 rounded-lg shadow-md">
+              <h3 className="font-medium text-lg light:text-gray-900 mb-2">Do you accept guest posts?</h3>
+              <p className="text-gray-600 dark:text-gray-300">Yes, I'm open to high-quality guest contributions that align with my blog's themes and provide value to readers.</p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="font-medium text-lg text-gray-900 mb-2">Can we collaborate on sponsored content?</h3>
-              <p className="text-gray-600">I selectively work with brands that align with my values. Please include details about your company and campaign in your message.</p>
+            <div className="light:bg-white p-6 rounded-lg shadow-md">
+              <h3 className="font-medium text-lg light:text-gray-900 mb-2">Can we collaborate on sponsored content?</h3>
+              <p className="text-gray-600 dark:text-gray-300">I selectively work with brands that align with my values. Please include details about your company and campaign in your message.</p>
             </div>
             
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="font-medium text-lg text-gray-900 mb-2">Do you offer consulting services?</h3>
-              <p className="text-gray-600">Yes, I provide consulting in content strategy, digital marketing, and blog development. Contact me for rates and availability.</p>
+            <div className="light:bg-white p-6 rounded-lg shadow-md">
+              <h3 className="font-medium text-lg light:text-gray-900 mb-2">Do you offer consulting services?</h3>
+              <p className="text-gray-600 dark:text-gray-300">Yes, I provide consulting in content strategy, digital marketing, and blog development. Contact me for rates and availability.</p>
             </div>
           </div>
         </div>
