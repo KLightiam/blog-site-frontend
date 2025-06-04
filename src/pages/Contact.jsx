@@ -64,7 +64,7 @@ export default function ContactPage() {
                   <Mail className="w-5 h-5 mt-1 mr-3 flex-shrink-0" />
                   <div>
                     <h3 className="font-medium mb-1">Email</h3>
-                    <p className="text-indigo-200">hello@yourblog.com</p>
+                    <p className="text-indigo-200">kabahatawoge@gmail.com</p>
                   </div>
                 </div>
                 
@@ -72,7 +72,7 @@ export default function ContactPage() {
                   <MapPin className="w-5 h-5 mt-1 mr-3 flex-shrink-0" />
                   <div>
                     <h3 className="font-medium mb-1">Location</h3>
-                    <p className="text-indigo-200">San Francisco, CA</p>
+                    <p className="text-indigo-200">Accra, Ghana</p>
                   </div>
                 </div>
                 
@@ -80,7 +80,7 @@ export default function ContactPage() {
                   <Phone className="w-5 h-5 mt-1 mr-3 flex-shrink-0" />
                   <div>
                     <h3 className="font-medium mb-1">Phone</h3>
-                    <p className="text-indigo-200">(123) 456-7890</p>
+                    <p className="text-indigo-200">(029) 456-7890</p>
                   </div>
                 </div>
               </div>
