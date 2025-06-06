@@ -24,8 +24,8 @@ export default function AboutPage() {
                   className="rounded-full mx-auto border-4 border-white shadow-lg w-32 h-32 object-cover" 
                 />
               </div>
-              <h2 className="text-xl font-bold text-white mb-2">Kabah Atawoge</h2>
-              <p className="text-indigo-200 mb-6">Blogger & Journalist</p>
+              <h2 className="text-xl font-bold dark:text-white mb-2">Kabah Atawoge</h2>
+              <p className="dark:text-indigo-200 mb-6">Blogger & Journalist</p>
               
               <div className="flex justify-center space-x-4">
                 <a href="#" className="text-white hover:text-indigo-200">
@@ -93,8 +93,8 @@ export default function AboutPage() {
           {/* Newsletter Section */}
           <div className=" p-8 border-t border-gray-700">
             <div className="text-center">
-              <h3 className="text-lg font-medium text-gray-50 mb-2">Join My Newsletter</h3>
-              <p className="text-gray-100 mb-4 max-w-lg mx-auto">Stay updated with my latest posts and receive exclusive content straight to your inbox.</p>
+              <h3 className="text-lg font-medium dark:text-gray-50 mb-2">Join My Newsletter</h3>
+              <p className="dark:text-gray-100 mb-4 max-w-lg mx-auto">Stay updated with my latest posts and receive exclusive content straight to your inbox.</p>
               
               <div className="flex max-w-md mx-auto">
                 <input 
