@@ -11,12 +11,12 @@ function Footer() {
             <p className="text-gray-500 mt-2">Sharing insights on web development and more.</p>
           </div>
           
-          <div className=" flex flex-col md:flex-row md:space-x-6">
+          {/* <div className=" flex flex-col md:flex-row md:space-x-6">
             <Link to="/" className="mb-1 md:mb-0">Home</Link>
             <Link to="/categories" className="mb-1 md:mb-0">Categories</Link>
             <Link to="/about" className=" mb-1 md:mb-0">About</Link>
             <Link to="/contact" className=" ">Contact</Link>
-          </div>
+          </div> */}
         </div>
         
         <div className="border-t border-gray-900 mt-8 pt-6 text-center">
