@@ -1,115 +1,83 @@
-import { Mail, Instagram, Twitter, Github } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Mail } from 'lucide-react';
+
+const TOPICS = [
+  { name: 'Technology', text: 'Latest trends, gadget reviews, and digital solutions' },
+  { name: 'Travel', text: 'Destinations, adventure stories, and travel tips' },
+  { name: 'Lifestyle', text: 'Wellness, productivity, and personal growth' },
+  { name: 'Photography', text: 'Tips, techniques, and visual storytelling' },
+];
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <header className="shadow-sm">
-        <div className="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">About Me</h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-300">Learn more about who I am and what I do</p>
-        </div>
-      </header>
-      
-      {/* Main Content */}
-      <main className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="shadow-md rounded-lg overflow-hidden">
-          {/* Profile Section */}
-          <div className="md:flex">
-            <div className="md:w-1/3 light:bg-indigo-700 p-8 text-center">
-              <div className="mb-4">
-                <img 
-                  src="/api/placeholder/200/200" 
-                  alt="Profile"
-                  className="rounded-full mx-auto border-4 border-white shadow-lg w-32 h-32 object-cover" 
-                />
-              </div>
-              <h2 className="text-xl font-bold dark:text-white mb-2">Kabah Atawoge</h2>
-              <p className="dark:text-indigo-200 mb-6">Blogger & Journalist</p>
-              
-              <div className="flex justify-center space-x-4">
-                <a href="#" className="text-white hover:text-indigo-200">
-                  <Twitter className="w-5 h-5" />
-                </a>
-                <a href="#" className="text-white hover:text-indigo-200">
-                  <Instagram className="w-5 h-5" />
-                </a>
-                <a href="#" className="text-white hover:text-indigo-200">
-                  <Github className="w-5 h-5" />
-                </a>
-                <a href="#" className="text-white hover:text-indigo-200">
-                  <Mail className="w-5 h-5" />
-                </a>
-              </div>
-            </div>
-            
-            <div className="md:w-2/3 p-8">
-              <div className="max-w-none">
-                <h3 className="text-2xl font-medium dark:text-white text-gray-900 mb-4">Hey there, I'm Kabah!</h3>
-                
-                <p className="text-gray-600 dark:text-white mb-4">
-                  Welcome to my blog! I'm a passionate writer and digital storyteller with over 5 years of experience creating content across various niches. My journey began in 2020 when I decided to share my thoughts on technology, travel, and lifestyle with the world.
-                </p>
-                
-                <p className="text-gray-600 dark:text-white mb-6">
-                  What started as a simple hobby has evolved into a platform where I connect with readers from around the globe. My mission is to create valuable, insightful, and entertaining content that inspires and helps others.
-                </p>
-                
-                <h4 className="text-xl font-medium dark:text-white text-gray-900 mb-3">What I Write About</h4>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                  <div className="bg-gray-50 p-4 rounded-lg dark:bg-gray-800">
-                    <h5 className="font-medium text-indigo-700 mb-1 dark:text-white">Technology</h5>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Latest trends, gadget reviews, and digital solutions</p>
-                  </div>
-                  
-                  <div className="bg-gray-50 p-4 rounded-lg dark:bg-gray-800">
-                    <h5 className="font-medium text-indigo-700 mb-1 dark:text-white">Travel</h5>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Destinations, adventure stories, and travel tips</p>
-                  </div>
-                  
-                  <div className="bg-gray-50 p-4 rounded-lg dark:bg-gray-800">
-                    <h5 className="font-medium text-indigo-700 mb-1 dark:text-white">Lifestyle</h5>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Wellness, productivity, and personal growth</p>
-                  </div>
-                  
-                  <div className="bg-gray-50 p-4 rounded-lg dark:bg-gray-800">
-                    <h5 className="font-medium text-indigo-700 mb-1 dark:text-white">Photography</h5>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">Tips, techniques, and visual storytelling</p>
-                  </div>
-                </div>
-                
-                <h4 className="text-xl font-medium text-gray-900 mb-3">My Story</h4>
-                <p className="text-gray-600 mb-4 dark:text-white">
-                  Before becoming a full-time blogger, I worked in marketing for several tech companies. My background in digital marketing has helped me understand how to create content that resonates with readers and builds a loyal community.
-                </p>
-                <p className="text-gray-600 dark:text-white">
-                  When I'm not writing, you can find me hiking local trails, experimenting with new recipes in the kitchen, or curled up with a good book. I believe in continuous learning and am always exploring new topics to share with my audience.
-                </p>
-              </div>
-            </div>
+    <div className="shell max-w-5xl pt-10 sm:pt-14">
+      <title>About | Kabah’s Blog</title>
+      <div className="grid gap-10 md:grid-cols-[15rem_minmax(0,1fr)] md:gap-14">
+        <aside className="md:sticky md:top-24 md:self-start">
+          <div
+            className="grid aspect-square w-32 place-items-center rounded-full bg-accent text-on-accent md:w-full md:max-w-[15rem]"
+            aria-hidden="true"
+          >
+            <span className="font-serif text-5xl italic md:text-7xl">KA</span>
           </div>
-          
-          {/* Newsletter Section */}
-          <div className=" p-8 border-t border-gray-700">
-            <div className="text-center">
-              <h3 className="text-lg font-medium dark:text-gray-50 mb-2">Join My Newsletter</h3>
-              <p className="dark:text-gray-100 mb-4 max-w-lg mx-auto">Stay updated with my latest posts and receive exclusive content straight to your inbox.</p>
-              
-              <div className="flex max-w-md mx-auto">
-                <input 
-                  type="email" 
-                  placeholder="Your email address" 
-                  className="flex-grow px-4 py-2 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                />
-                <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-r-lg transition duration-200">
-                  Subscribe
-                </button>
+          <h2 className="mt-6 font-serif text-2xl font-medium">Kabah Atawoge</h2>
+          <p className="text-muted">Blogger and journalist, Accra</p>
+          <a
+            href="mailto:kabahatawoge@gmail.com"
+            className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-accent hover:underline underline-offset-4"
+          >
+            <Mail className="h-4 w-4" aria-hidden="true" /> kabahatawoge@gmail.com
+          </a>
+        </aside>
+
+        <div className="min-w-0">
+          <h1 className="font-serif text-[clamp(2.25rem,5vw,3.25rem)] font-medium leading-tight tracking-[-0.015em]">
+            Hey there, I’m Kabah
+          </h1>
+          <div className="prose-body mt-6 max-w-[38rem] font-serif text-[1.2rem] leading-[1.75] text-ink/90">
+            <p>
+              Welcome to my blog! I’m a passionate writer and digital storyteller with over 5 years of experience creating content
+              across various niches. My journey began in 2020 when I decided to share my thoughts on technology, travel, and lifestyle
+              with the world.
+            </p>
+            <p>
+              What started as a simple hobby has evolved into a platform where I connect with readers from around the globe. My mission
+              is to create valuable, insightful, and entertaining content that inspires and helps others.
+            </p>
+          </div>
+
+          <h2 className="mt-14 font-serif text-3xl font-medium">What I write about</h2>
+          <dl className="mt-6 grid gap-3 sm:grid-cols-2">
+            {TOPICS.map((t) => (
+              <div key={t.name} className="rounded-xl bg-surface p-5">
+                <dt className="font-semibold">{t.name}</dt>
+                <dd className="mt-1 text-sm leading-relaxed text-muted">{t.text}</dd>
               </div>
-            </div>
+            ))}
+          </dl>
+
+          <h2 className="mt-14 font-serif text-3xl font-medium">My story</h2>
+          <div className="prose-body mt-6 max-w-[38rem] font-serif text-[1.2rem] leading-[1.75] text-ink/90">
+            <p>
+              Before becoming a full-time blogger, I worked in marketing for several tech companies. My background in digital marketing
+              has helped me understand how to create content that resonates with readers and builds a loyal community.
+            </p>
+            <p>
+              When I’m not writing, you can find me hiking local trails, experimenting with new recipes in the kitchen, or curled up with
+              a good book. I believe in continuous learning and am always exploring new topics to share with my audience.
+            </p>
+          </div>
+
+          <div className="mt-12 flex flex-wrap gap-3">
+            <Link to="/" className="btn btn-primary">
+              Read the latest stories
+            </Link>
+            <Link to="/contact" className="btn btn-ghost">
+              Get in touch
+            </Link>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

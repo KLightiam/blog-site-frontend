@@ -1,104 +1,76 @@
-import { useEffect, useState } from 'react';
-import { Search, Tag, BookOpen } from 'lucide-react';
-import { Link, Outlet } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight, Search } from 'lucide-react';
+import { LoadError, Message } from '../components/States';
+import { useFetch } from '../lib/useFetch';
 
 export default function CategoriesPage() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [filteredCategories, setFilteredCategories] = useState([]);
-  
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const response = await fetch('http://localhost:3000/api/v1/categories');
-        if (response.ok) {
-        const data = await response.json();
-        // console.log('Fetched categories:', data);
-        setCategories(data);
-        }
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    }
-    fetchCategories();
-  }, []);
-  
-  useEffect(() => {
-    setFilteredCategories(prev => {
-      if (!searchTerm) {
-        return categories;
-      }
-      return categories.filter(category =>
-        category.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    );
-  }, [searchTerm, categories]);
-  
+  const { status, data } = useFetch('/api/v1/categories');
+
+  const term = searchTerm.trim().toLowerCase();
+  // Categories with no published stories lead to an empty page, so they are left out.
+  const categories = (data ?? [])
+    .filter((c) => c.posts.length > 0)
+    .filter((c) => !term || c.name.toLowerCase().includes(term));
+
   return (
-    <div className=" min-h-screen">
-      {/* Header */}
-      <header className="shadow-sm dark:shadow-indigo-900">
-        <div className="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold dark:text-gray-100">Categories</h1>
-          <p className="mt-2 dark:text-gray-300">Explore topics that interest you</p>
-        </div>
-      </header>
-      
-      {/* Main Content */}
-      <main className="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        {/* Search Bar */}
-        <div className="mb-8 relative">
-          <div className="flex items-center border border-gray-500 rounded-lg shadow-sm dark:shadow-gray-500">
-            <div className="pl-4 pr-2">
-              <Search className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="text"
-              placeholder="Search categories..."
-              className="block w-full py-3 px-2 focus:outline-none dark:text-gray-100 dark:placeholder-gray-200"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </div>
-        
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCategories.map((category) => (
-            <div 
-              key={category.id} 
-              className=" rounded-lg shadow-md shadow-gray-500 overflow-hidden border border-gray-500 transition-all hover:shadow-lg dark:hover:text-indigo-800"
-            >
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center">
-                    <Tag className="h-5 w-5 text-indigo-600 mr-2" />
-                    <h3 className="text-lg font-medium dark:text-indigo-100">{category.name.toUpperCase()}</h3>
-                  </div>
-                  <div className=" bg-indigo-100 text-indigo-900 text-xs font-medium px-2.5 py-0.5 rounded-full ">
-                  <span className='md:text-nowrap'>
-                    {category.posts.length} {category.posts.length === 1 ? 'post' : 'posts'}
-                  </span>
-                  </div>
-                </div>
-                {/* <p className="text-gray-600 text-sm mb-4">{category.description}</p> */}
-                <Link to={`/categories/${category.name}/posts`} className="flex items-center text-indigo-600 hover:text-indigo-800 text-sm font-medium">
-                  <BookOpen className="h-4 w-4 mr-1" />
-                  Browse articles
-                </Link>
-              </div>
-            </div>
+    <div className="shell max-w-4xl pt-10 sm:pt-14">
+      <title>Categories | Kabah’s Blog</title>
+      <h1 className="font-serif text-[clamp(2.25rem,5vw,3.25rem)] font-medium leading-tight tracking-[-0.015em]">Categories</h1>
+      <p className="mt-3 text-lg text-muted">Every topic on the blog, with how many stories each one has.</p>
+
+      <div className="relative mt-8">
+        <label htmlFor="category-search" className="sr-only">
+          Search categories
+        </label>
+        <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted" aria-hidden="true" />
+        <input
+          id="category-search"
+          type="search"
+          placeholder="Search categories"
+          className="field pl-12"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
+      {status === 'loading' && (
+        <div className="mt-8 grid gap-3 sm:grid-cols-2" aria-busy="true">
+          {Array.from({ length: 4 }, (_, i) => (
+            <div key={i} className="skeleton h-24" />
           ))}
         </div>
-        
-        {filteredCategories.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500">No categories found matching "{searchTerm}"</p>
-          </div>
-        )}
-      </main>
-      {/* <Outlet /> */}
+      )}
+      {status === 'error' && <LoadError />}
+      {status === 'ready' && categories.length === 0 && (
+        <Message title={term ? `No categories match “${searchTerm}”` : 'No categories yet'}>
+          {term ? 'Try a shorter or different word.' : 'Topics appear here once stories are published.'}
+        </Message>
+      )}
+      {status === 'ready' && categories.length > 0 && (
+        <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+          {categories.map((category) => {
+            const count = category.posts.length;
+            return (
+              <li key={category.id}>
+                <Link
+                  to={`/categories/${encodeURIComponent(category.name)}/posts`}
+                  className="group flex items-center justify-between gap-4 rounded-xl border border-line p-5 transition-colors hover:border-accent"
+                >
+                  <span>
+                    <span className="block font-serif text-2xl font-medium group-hover:text-accent transition-colors">{category.name}</span>
+                    <span className="mt-1 block text-sm text-muted tabular-nums">
+                      {count} {count === 1 ? 'story' : 'stories'}
+                    </span>
+                  </span>
+                  <ArrowUpRight className="h-5 w-5 shrink-0 text-muted transition group-hover:text-accent group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }

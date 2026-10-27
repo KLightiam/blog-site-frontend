@@ -1,233 +1,127 @@
 import { useState } from 'react';
-import { Mail, MapPin, Phone, MessageSquare, Send } from 'lucide-react';
+import { Mail, MapPin, Phone, Send } from 'lucide-react';
+
+const EMAIL = 'kabahatawoge@gmail.com';
+
+const FAQ = [
+  ['How quickly do you respond to messages?', 'I typically respond to all inquiries within 24-48 hours during weekdays.'],
+  ['Do you accept guest posts?', 'Yes, I’m open to high-quality guest contributions that align with my blog’s themes and provide value to readers.'],
+  ['Can we collaborate on sponsored content?', 'I selectively work with brands that align with my values. Please include details about your company and campaign in your message.'],
+  ['Do you offer consulting services?', 'Yes, I provide consulting in content strategy, digital marketing, and blog development. Contact me for rates and availability.'],
+];
+
+const EMPTY = { name: '', email: '', subject: '', message: '' };
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  
-  const [formStatus, setFormStatus] = useState({
-    submitted: false,
-    error: false
-  });
-  
+  const [formData, setFormData] = useState(EMPTY);
+  const [opened, setOpened] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  
-  const handleSubmit = () => {
-    // In a real application, you would send the form data to your backend
-    console.log('Form submitted:', formData);
-    
-    // Simulate form submission
-    setFormStatus({
-      submitted: true,
-      error: false
-    });
-    
-    // Reset form after submission
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
+
+  // There is no mail server behind the blog, so the form opens the visitor's email app with the message filled in.
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const subject = formData.subject || `Message from ${formData.name}`;
+    const body = `${formData.message}\n\n${formData.name}\n${formData.email}`;
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setOpened(true);
   };
-  
+
   return (
-    <div className="light:bg-gray-50 min-h-screen">
-      {/* Header */}
-      <header className="light:bg-white shadow-sm">
-        <div className="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold light:text-gray-900">Contact Me</h1>
-          <p className="mt-2 light:text-gray-600">Get in touch with questions, suggestions, or collaboration ideas</p>
-        </div>
-      </header>
-      
-      {/* Main Content */}
-      <main className="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <div className="light:bg-white shadow-md rounded-lg overflow-hidden">
-          <div className="md:flex">
-            {/* Contact Info Section */}
-            <div className="md:w-1/3 light:bg-indigo-700 p-8 dark:text-white">
-              <h2 className="text-2xl font-bold mb-6">Let's Connect</h2>
-              
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <Mail className="w-5 h-5 mt-1 mr-3 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-medium mb-1">Email</h3>
-                    <p className="dark:text-indigo-200 text-indigo-500">kabahatawoge@gmail.com</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <MapPin className="w-5 h-5 mt-1 mr-3 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-medium mb-1">Location</h3>
-                    <p className="dark:text-indigo-200 text-indigo-500">Accra, Ghana</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <Phone className="w-5 h-5 mt-1 mr-3 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-medium mb-1">Phone</h3>
-                    <p className="dark:text-indigo-200 text-indigo-500">(029) 456-7890</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-12">
-                <h3 className="font-medium mb-3">Follow Me</h3>
-                <div className="flex space-x-4">
-                  <a href="#" className="dark:bg-indigo-600 dark:hover:bg-indigo-500 p-2 rounded-full transition-colors">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-                    </svg>
-                  </a>
-                  <a href="#" className="dark:bg-indigo-600 dark:hover:bg-indigo-500 p-2 rounded-full transition-colors">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                    </svg>
-                  </a>
-                  <a href="#" className="dark:bg-indigo-600 dark:hover:bg-indigo-500 p-2 rounded-full transition-colors">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            {/* Contact Form Section */}
-            <div className="md:w-2/3 p-8">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold light:text-gray-900 mb-2">Send Me a Message</h2>
-                <p className="text-gray-600 dark:text-gray-300">Have a question or want to collaborate? Fill out the form below and I'll get back to you as soon as possible.</p>
-              </div>
-              
-              {formStatus.submitted ? (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-                  <MessageSquare className="w-12 h-12 text-green-500 mx-auto mb-3" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">Message Received!</h3>
-                  <p className="text-gray-600">Thanks for reaching out. I'll respond to your message as soon as possible.</p>
-                  <button 
-                    className="mt-4 text-green-600 hover:text-green-800 font-medium"
-                    onClick={() => setFormStatus({ submitted: false, error: false })}
-                  >
-                    Send another message
-                  </button>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium light:text-gray-700 mb-1">
-                        Your Name
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="w-full light:text-gray-700 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium light:text-gray-700 mb-1">
-                        Your Email
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="w-full px-4 light:text-gray-700 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="subject" className="block text-sm font-medium light:text-gray-700 mb-1">
-                      Subject
-                    </label>
-                    <input
-                      type="text"
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      className="w-full light:text-gray-700 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium light:text-gray-700 mb-1">
-                      Message
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows="5"
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 light:text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    ></textarea>
-                  </div>
-                  
-                  <div className="flex justify-end">
-                    <button
-                      onClick={handleSubmit}
-                      className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200"
-                    >
-                      <Send className="w-4 h-4 mr-2" />
-                      Send Message
-                    </button>
-                  </div>
-                </div>
-              )}
+    <div className="shell max-w-5xl pt-10 sm:pt-14">
+      <title>Contact | Kabah’s Blog</title>
+      <h1 className="font-serif text-[clamp(2.25rem,5vw,3.25rem)] font-medium leading-tight tracking-[-0.015em]">Get in touch</h1>
+      <p className="mt-3 max-w-xl text-lg text-muted">Questions, story ideas or collaborations. I read every message.</p>
+
+      <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,5fr)_minmax(0,8fr)] md:gap-14">
+        <dl className="space-y-6">
+          <div className="flex gap-3">
+            <Mail className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
+            <div>
+              <dt className="text-sm text-muted">Email</dt>
+              <dd className="font-medium">
+                <a href={`mailto:${EMAIL}`} className="hover:text-accent break-all">
+                  {EMAIL}
+                </a>
+              </dd>
             </div>
           </div>
-        </div>
-        
-        {/* FAQ Section */}
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold light:text-gray-900 mb-6">Frequently Asked Questions</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="light:bg-white p-6 rounded-lg shadow-md">
-              <h3 className="font-medium text-lg light:text-gray-900 mb-2">How quickly do you respond to messages?</h3>
-              <p className="text-gray-600 dark:text-gray-300">I typically respond to all inquiries within 24-48 hours during weekdays.</p>
-            </div>
-            
-            <div className="light:bg-white p-6 rounded-lg shadow-md">
-              <h3 className="font-medium text-lg light:text-gray-900 mb-2">Do you accept guest posts?</h3>
-              <p className="text-gray-600 dark:text-gray-300">Yes, I'm open to high-quality guest contributions that align with my blog's themes and provide value to readers.</p>
-            </div>
-            
-            <div className="light:bg-white p-6 rounded-lg shadow-md">
-              <h3 className="font-medium text-lg light:text-gray-900 mb-2">Can we collaborate on sponsored content?</h3>
-              <p className="text-gray-600 dark:text-gray-300">I selectively work with brands that align with my values. Please include details about your company and campaign in your message.</p>
-            </div>
-            
-            <div className="light:bg-white p-6 rounded-lg shadow-md">
-              <h3 className="font-medium text-lg light:text-gray-900 mb-2">Do you offer consulting services?</h3>
-              <p className="text-gray-600 dark:text-gray-300">Yes, I provide consulting in content strategy, digital marketing, and blog development. Contact me for rates and availability.</p>
+          <div className="flex gap-3">
+            <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
+            <div>
+              <dt className="text-sm text-muted">Location</dt>
+              <dd className="font-medium">Accra, Ghana</dd>
             </div>
           </div>
+          <div className="flex gap-3">
+            <Phone className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
+            <div>
+              <dt className="text-sm text-muted">Phone</dt>
+              <dd className="font-medium tabular-nums">(029) 456-7890</dd>
+            </div>
+          </div>
+        </dl>
+
+        <form onSubmit={handleSubmit} className="rounded-2xl border border-line p-6 sm:p-8">
+          <h2 className="font-serif text-2xl font-medium">Send a message</h2>
+          <div className="mt-6 grid gap-5 sm:grid-cols-2">
+            <div>
+              <label htmlFor="name" className="mb-1.5 block text-sm font-medium">
+                Your name
+              </label>
+              <input id="name" name="name" type="text" required autoComplete="name" value={formData.name} onChange={handleChange} className="field" />
+            </div>
+            <div>
+              <label htmlFor="email" className="mb-1.5 block text-sm font-medium">
+                Your email
+              </label>
+              <input id="email" name="email" type="email" required autoComplete="email" value={formData.email} onChange={handleChange} className="field" />
+            </div>
+          </div>
+          <div className="mt-5">
+            <label htmlFor="subject" className="mb-1.5 block text-sm font-medium">
+              Subject <span className="font-normal text-muted">(optional)</span>
+            </label>
+            <input id="subject" name="subject" type="text" value={formData.subject} onChange={handleChange} className="field" />
+          </div>
+          <div className="mt-5">
+            <label htmlFor="message" className="mb-1.5 block text-sm font-medium">
+              Message
+            </label>
+            <textarea id="message" name="message" rows={6} required value={formData.message} onChange={handleChange} className="field resize-y" />
+          </div>
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+            <p className="text-sm text-muted" aria-live="polite">
+              {opened ? `Your email app should now be open. If it isn’t, write to ${EMAIL}.` : 'This opens your email app with the message ready to send.'}
+            </p>
+            <button type="submit" className="btn btn-primary">
+              <Send className="h-4 w-4" aria-hidden="true" /> Write email
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <section aria-labelledby="faq-title" className="mt-20">
+        <h2 id="faq-title" className="font-serif text-3xl font-medium">
+          Common questions
+        </h2>
+        <div className="mt-6 divide-y divide-line border-y border-line">
+          {FAQ.map(([q, a]) => (
+            <details key={q} className="group py-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium [&::-webkit-details-marker]:hidden">
+                {q}
+                <span className="text-2xl leading-none text-muted transition-transform group-open:rotate-45" aria-hidden="true">
+                  +
+                </span>
+              </summary>
+              <p className="mt-3 max-w-2xl leading-relaxed text-muted">{a}</p>
+            </details>
+          ))}
         </div>
-      </main>
+      </section>
     </div>
   );
 }

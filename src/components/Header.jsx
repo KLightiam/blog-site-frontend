@@ -1,60 +1,69 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 
+const NAV = [
+  { to: '/', label: 'Stories', end: true },
+  { to: '/categories', label: 'Categories' },
+  { to: '/about', label: 'About' },
+  { to: '/contact', label: 'Contact' },
+];
+
+const linkClass = ({ isActive }) =>
+  `rounded-full px-3.5 py-2 text-[0.9375rem] font-medium transition-colors ${
+    isActive ? 'bg-surface text-ink' : 'text-muted hover:text-ink'
+  }`;
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  }
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  }
+  const closeMenu = () => setIsMenuOpen(false);
 
-    return (
-        <header className="shadow-md">
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex justify-between items-center">
-          <Link to="/" className="text-3xl font-bold text-black">Blog</Link>
-          
-          {/* Mobile menu button */}
-          <button 
-            className="md:hidden focus:outline-none" 
-            onClick={() => toggleMenu()}
-            aria-label="Toggle menu"
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
-            aria-haspopup="true"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-            </svg>
-          </button>
-          
-          {/* Desktop navigation */}
-          <nav className="hidden md:block">
-            <ul className="flex space-x-8">
-              <li><Link to="/" className="text-black hover:text-gray-600 font-medium">Home</Link></li>
-              <li><Link to="/categories" className="text-black hover:text-gray-600 font-medium">Categories</Link></li>
-              <li><Link to="/about" className="text-black hover:text-gray-600 font-medium">About</Link></li>
-              <li><Link to="/contact" className="text-black hover:text-gray-600 font-medium">Contact</Link></li>
-            </ul>
-          </nav>
-        </div>
-        
-        {/* Mobile navigation */}
-        {isMenuOpen && (
-          <nav className="md:hidden mt-4">
-            <ul className="flex flex-col space-y-4">
-              <li><Link to="/" className="text-black hover:text-gray-600 font-medium" onClick={() => closeMenu()}>Home</Link></li>
-              <li><Link to="/categories" className="text-black hover:text-gray-600 font-medium" onClick={() => closeMenu()}>Categories</Link></li>
-              <li><Link to="/about" className="text-black hover:text-gray-600 font-medium" onClick={() => closeMenu()}>About</Link></li>
-              <li><Link to="/contact" className="text-black hover:text-gray-600 font-medium" onClick={() => closeMenu()}>Contact</Link></li>
-            </ul>
-          </nav>
-        )}
+  return (
+    <header className="sticky top-0 z-20 border-b border-line bg-paper/90 backdrop-blur-md">
+      <div className="shell flex h-16 items-center justify-between gap-6">
+        <Link to="/" className="font-serif text-2xl font-semibold tracking-tight" onClick={closeMenu}>
+          Kabah’s Blog
+        </Link>
+
+        <nav className="hidden md:block" aria-label="Main">
+          <ul className="flex items-center gap-1">
+            {NAV.map((item) => (
+              <li key={item.to}>
+                <NavLink to={item.to} end={item.end} className={linkClass}>
+                  {item.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <button
+          type="button"
+          className="-mr-2 rounded-md p-2 text-ink hover:bg-surface md:hidden"
+          onClick={() => setIsMenuOpen((open) => !open)}
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
+        >
+          {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
+
+      {isMenuOpen && (
+        <nav id="mobile-menu" className="border-t border-line md:hidden" aria-label="Main">
+          <ul className="shell flex flex-col gap-1 py-3">
+            {NAV.map((item) => (
+              <li key={item.to}>
+                <NavLink to={item.to} end={item.end} className={linkClass} onClick={closeMenu}>
+                  {item.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }
+
 export default Header;

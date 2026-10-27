@@ -1,25 +1,46 @@
-import { Link, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { coverOf, excerpt, formatDate, readingTime } from '../lib/posts';
 
-function BlogCard({ post,category }) {
+export function Cover({ post, className = '', sizes }) {
+  const src = coverOf(post);
+  if (!src) {
+    return (
+      <div className={`grid place-items-center bg-accent-soft text-accent ${className}`} aria-hidden="true">
+        <span className="font-serif text-5xl italic">{post.title.charAt(0)}</span>
+      </div>
+    );
+  }
+  return <img src={src} alt="" loading="lazy" sizes={sizes} className={`object-cover ${className}`} />;
+}
+
+export function PostMeta({ post, className = '', short = false }) {
+  const category = post.categories?.[0]?.name;
   return (
-    <article className=" rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl">
-    <Link to={`/blog/${post.id}`}>
-        <div className="h-48 overflow-hidden">
-          <img 
-            src={post.files[0].url}
-            alt={post.title}
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-          />
-        </div>
-        
-        <div className="p-6">
-          <p className="dark:text-gray-100 text-sm mb-2">{new Date(post.date).toLocaleDateString()}</p>
-          <h3 className="text-xl font-bold mb-3 leading-tight">{post.title}</h3>
-          <p className="dark:text-gray-300">{post.content.split(" ").slice(0,10).join(' ')+"..."}</p>
-        </div>
-      </Link>
+    <p className={`flex flex-wrap items-center gap-x-2 text-sm text-muted ${className}`}>
+      {category && <span className="font-semibold text-accent">{category}</span>}
+      {category && <span aria-hidden="true">·</span>}
+      <time dateTime={post.date}>{formatDate(post.date, { short })}</time>
+      <span aria-hidden="true">·</span>
+      <span>{readingTime(post.content)} min read</span>
+    </p>
+  );
+}
+
+function BlogCard({ post }) {
+  return (
+    <article className="group relative flex flex-col">
+      <div className="overflow-hidden rounded-xl">
+        <Cover post={post} className="aspect-[3/2] w-full transition-transform duration-500 group-hover:scale-[1.03]" />
+      </div>
+      <PostMeta post={post} short className="mt-4" />
+      <h3 className="mt-2 font-serif text-2xl font-medium leading-snug">
+        <Link to={`/blog/${post.id}`} className="after:absolute after:inset-0 group-hover:text-accent transition-colors">
+          {post.title}
+        </Link>
+      </h3>
+      <p className="mt-2 text-muted leading-relaxed">{excerpt(post.content, 22)}</p>
     </article>
   );
 }
+
 export default BlogCard;
