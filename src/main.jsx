@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import { StrictMode, Suspense, lazy } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import '@fontsource-variable/newsreader'
@@ -14,7 +14,19 @@ import ContactPage from './pages/Contact.jsx'
 import Categories from './pages/Categories.jsx'
 import CategoryPosts from './pages/CategoryPosts.jsx'
 
+// Loaded only when someone opens /admin, so readers never download it.
+const AdminApp = lazy(() => import('./admin/AdminApp.jsx'))
+
 const router = createBrowserRouter([
+  {
+    path: '/admin/*',
+    element: (
+      <Suspense fallback={<div className="grid min-h-screen place-items-center text-muted">Loading admin…</div>}>
+        <AdminApp />
+      </Suspense>
+    ),
+    errorElement: <RouteError />,
+  },
   {
     path: '/',
     element: <App />,
