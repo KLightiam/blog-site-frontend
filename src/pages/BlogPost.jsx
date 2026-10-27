@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Check, Link2 } from 'lucide-react';
 import { Cover } from '../components/BlogCard';
+import PhotoCredit from '../components/PhotoCredit';
 import { BackHome, LoadError, Message } from '../components/States';
 import { useFetch } from '../lib/useFetch';
 import { formatDate, paragraphs, readingTime } from '../lib/posts';
@@ -83,6 +84,9 @@ function BlogPost() {
 
       <figure className="shell mt-10 max-w-5xl">
         <Cover post={post} className="aspect-[16/9] w-full rounded-2xl" />
+        <figcaption>
+          <PhotoCredit file={post.files?.find((f) => f.url)} className="mt-3" />
+        </figcaption>
       </figure>
 
       <div className="shell max-w-3xl">

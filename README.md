@@ -5,7 +5,7 @@ The reading site for Kabah Atawoge’s blog: stories on technology, travel, life
 ## Pages
 
 - **Stories** (`/`): the newest post as a lead story, the next six as cards, and links to every topic.
-- **Story** (`/blog/:id`): the full article with category, date, reading time, cover image, tags and a copy-link button.
+- **Story** (`/blog/:id`): the full article with category, date, reading time, cover image with its photo credit, tags and a copy-link button.
 - **Categories** (`/categories`): every topic with published stories, searchable.
 - **Category** (`/categories/:name/posts`): the stories in one topic.
 - **About** and **Contact**: the contact form opens the visitor’s email app with their message filled in, since the blog has no mail server.
@@ -34,7 +34,7 @@ npm run build    # production build in dist/
 Open `/admin` and sign in with an `ADMIN` account (`npm run seed` in the backend creates one). From there:
 
 - **Posts** lists everything, drafts included, with filters and search.
-- **New post** opens the editor: title, text (leave a blank line between paragraphs), category, tags and a cover image. **Preview** shows the post as readers will see it.
+- **New post** opens the editor: title, text (leave a blank line between paragraphs), category, tags and a cover image. Once a cover is uploaded, add its **photo credit** (photographer, link, licence); it appears under the cover on the post, which Creative Commons BY licences require. **Preview** shows the post as readers will see it.
 - **Save draft** keeps it private; **Publish** puts it at the top of the blog. A live post can be updated or moved back to drafts. Ctrl+S or ⌘S saves.
 - **Categories** adds, renames and deletes topics.
 

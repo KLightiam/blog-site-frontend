@@ -4,6 +4,7 @@ import { ArrowLeft, ExternalLink, ImagePlus, X } from 'lucide-react';
 import { adminFetch } from './api';
 import { ConfirmButton, ErrorNote, StatusPill } from './ui';
 import { coverOf, formatDate, paragraphs, readingTime } from '../lib/posts';
+import PhotoCredit from '../components/PhotoCredit';
 
 const EMPTY = { title: '', content: '', categoryId: '', tags: [] };
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
@@ -63,7 +64,76 @@ function TagInput({ tags, onChange, suggestions }) {
   );
 }
 
-function Preview({ form, cover, categories, date }) {
+const LICENCES = ['CC BY 2.0', 'CC BY 4.0', 'CC BY-SA 4.0', 'CC0 (public domain)', 'Unsplash License', 'Pexels License', 'My own photo'];
+const creditOf = (file) => ({
+  credit: file?.credit ?? '',
+  creditUrl: file?.creditUrl ?? '',
+  license: file?.license ?? '',
+  licenseUrl: file?.licenseUrl ?? '',
+});
+
+// Who took the cover photo and under which licence. Shown under the cover on the article page.
+function CoverCredit({ file, postId, onSaved, onDirtyChange }) {
+  const [values, setValues] = useState(() => creditOf(file));
+  const [state, setState] = useState({ busy: false, error: '', saved: false });
+  const dirty = !same(values, creditOf(file));
+
+  useEffect(() => onDirtyChange(dirty), [dirty, onDirtyChange]);
+  // When the cover is removed or replaced, this panel closes and its edits no longer count.
+  useEffect(() => () => onDirtyChange(false), [onDirtyChange]);
+
+  const set = (key) => (e) => {
+    setValues((v) => ({ ...v, [key]: e.target.value }));
+    setState((st) => ({ ...st, saved: false }));
+  };
+  const save = async () => {
+    setState({ busy: true, error: '', saved: false });
+    try {
+      const updated = await adminFetch(`/api/v1/admin/posts/${postId}/cover`, { method: 'PATCH', body: values });
+      onSaved(updated.files);
+      setState({ busy: false, error: '', saved: true });
+    } catch (err) {
+      setState({ busy: false, error: err.message, saved: false });
+    }
+  };
+
+  const field = (key, label, props = {}) => (
+    <div>
+      <label htmlFor={`credit-${key}`} className="mb-1 block text-xs font-medium text-muted">
+        {label}
+      </label>
+      <input id={`credit-${key}`} value={values[key]} onChange={set(key)} maxLength={200} className="field min-h-0 py-2 text-sm" {...props} />
+    </div>
+  );
+
+  return (
+    <fieldset className="mt-4 space-y-3 border-t border-line pt-4">
+      <legend className="sr-only">Photo credit</legend>
+      <p className="text-sm font-medium">Photo credit</p>
+      {field('credit', 'Photographer or source', { placeholder: 'e.g. Adam Jones on Flickr' })}
+      {field('creditUrl', 'Link to the photo', { type: 'url', placeholder: 'https://' })}
+      {field('license', 'Licence', { list: 'licence-options', placeholder: 'e.g. CC BY 2.0' })}
+      <datalist id="licence-options">
+        {LICENCES.map((l) => (
+          <option key={l} value={l} />
+        ))}
+      </datalist>
+      {field('licenseUrl', 'Link to the licence', { type: 'url', placeholder: 'https://' })}
+      <p className="text-xs text-muted">Creative Commons BY licences require this credit. It appears under the cover on the post.</p>
+      <div className="flex items-center gap-3">
+        <button type="button" className="btn btn-ghost min-h-0 py-2 disabled:opacity-60" disabled={!dirty || state.busy} onClick={save}>
+          {state.busy ? 'Saving…' : 'Save credit'}
+        </button>
+        <span className="text-sm text-muted" aria-live="polite">
+          {state.saved ? 'Credit saved.' : dirty ? 'Unsaved' : ''}
+        </span>
+      </div>
+      <ErrorNote>{state.error}</ErrorNote>
+    </fieldset>
+  );
+}
+
+function Preview({ form, cover, coverFile, categories, date }) {
   const category = categories.find((c) => c.id === form.categoryId);
   const body = paragraphs(form.content);
   return (
@@ -74,6 +144,7 @@ function Preview({ form, cover, categories, date }) {
         {formatDate(date)} · {readingTime(form.content)} min read
       </p>
       {cover && <img src={cover} alt="" className="mt-8 aspect-[16/9] w-full rounded-xl object-cover" />}
+      {cover && <PhotoCredit file={coverFile} className="mt-3" />}
       <div className="prose-body mt-8 font-serif text-[1.2rem] leading-[1.75] text-ink/90">
         {body.length ? body.map((p, i) => <p key={i}>{p}</p>) : <p className="text-muted">Nothing written yet.</p>}
       </div>
@@ -108,9 +179,10 @@ export default function EditorPage() {
   const [localCover, setLocalCover] = useState(null);
   const fileInput = useRef(null);
 
+  const [creditDirty, setCreditDirty] = useState(false);
   const dirty = !same(form, formOf(saved));
   const dirtyRef = useRef(dirty);
-  dirtyRef.current = dirty;
+  dirtyRef.current = dirty || creditDirty;
 
   // Load the post when arriving at /admin/posts/:id (not after creating it here).
   useEffect(() => {
@@ -346,7 +418,7 @@ export default function EditorPage() {
               </p>
             </div>
           ) : (
-            <Preview form={form} cover={cover} categories={categories} date={saved?.published ? saved.date : new Date()} />
+            <Preview form={form} cover={cover} coverFile={saved?.files?.[0]} categories={categories} date={saved?.published ? saved.date : new Date()} />
           )}
         </div>
 
@@ -432,6 +504,15 @@ export default function EditorPage() {
                     Remove
                   </button>
                 </div>
+                {saved?.files?.[0] && !localCover && (
+                  <CoverCredit
+                    key={saved.files[0].id}
+                    file={saved.files[0]}
+                    postId={saved.id}
+                    onSaved={(files) => setSaved((s) => ({ ...s, files }))}
+                    onDirtyChange={setCreditDirty}
+                  />
+                )}
               </div>
             ) : (
               <label
